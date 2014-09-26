@@ -64,7 +64,7 @@ public class MyQueue<E> implements Queue<E>{
 	@Override
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
-		return false;
+		return size == 0;
 	}
 
 }

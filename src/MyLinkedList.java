@@ -31,12 +31,12 @@ public class MyLinkedList <E> implements List<E>{
 	@Override
 	public boolean isFirst(Position<E> p) {
 		// TODO Auto-generated method stub
-		return false;
+		return p == first;
 	}
 
 	@Override
 	public boolean isLast(Position<E> p) {
-		return false;
+		return p == last;
 	}
 
 	@Override
