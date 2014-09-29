@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 
 public class ADSSimulator {
 	static public void main(String[]args)
@@ -35,6 +37,18 @@ public class ADSSimulator {
 			System.out.println(p.element());
 			p = myLinkedList.next(p);
 		}
+		
+		Iterator<String> iterator= myLinkedList.elements();
+		while(iterator.hasNext())
+		{
+			System.out.println("Iterator element"+iterator.next());
+		}
+		Iterator<Position<String>> iteratorPos = myLinkedList.positions();
+		while(iteratorPos.hasNext())
+		{
+			System.out.println("Iterator pos"+iteratorPos.next().element());
+		}
+		
 		
 		/*
 		 * queue

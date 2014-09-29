@@ -39,6 +39,35 @@ public class MyLinkedList <E> implements List<E>, Iterable<E>{
 		}
 		
 	}
+	class PosIterator implements Iterator<Position<E>>
+	{
+		//current = first;
+		LNode current = first;
+		
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return current != null;
+		}
+
+		@Override
+		public Position<E> next() {
+			// TODO Auto-generated method stub
+			LNode item = current;
+			
+			current = current.next;
+			
+			return item;
+			
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+			
+		}
+		
+	}
 	
 	private int size = 0;
 	private LNode first, last;
@@ -238,7 +267,7 @@ public class MyLinkedList <E> implements List<E>, Iterable<E>{
 	@Override
 	public Iterator<Position<E>> positions() {
 		// TODO Auto-generated method stub
-		return (Iterator<Position<E>>) new SeqIterator();
+		return new PosIterator();
 	}
 
 	@Override
