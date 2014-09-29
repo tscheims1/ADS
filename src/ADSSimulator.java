@@ -9,15 +9,21 @@ public class ADSSimulator {
 		MyLinkedList<String> myLinkedList = new MyLinkedList<String>();
 		
 		myLinkedList.insertLast("Hans1");
+		
 		myLinkedList.insertLast("Hans2");
 		myLinkedList.insertLast("Hans3");
-		Position<String>p1 = myLinkedList.last();
+		
 		myLinkedList.insertLast("Hans4");
 		myLinkedList.insertLast("Hans5");
-		
-		myLinkedList.remove(p1);
-		
+		Position<String>p1 = myLinkedList.last();
+		//myLinkedList.remove(p1);
+		myLinkedList.insertAfter(p1, "after hans5");
 		Position<String>p = myLinkedList.last();
+		
+		
+		
+		
+		
 		while(p != null)
 		{
 			System.out.println(p.element());
