@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -15,9 +16,10 @@ public class MyTree<E> implements Tree<E> {
 	private class TNode implements Position<E>
 	{
 		TNode parent;
-		MyLinkedList<TNode> children;
-		Position<E> mySiblingPos;
+		MyLinkedList<TNode> children = new MyLinkedList<TNode>();
+		Position<TNode> mySiblingPos;
 		E ele;
+		Object creator = MyTree.this;
 		
 		TNode(E ele){this.ele = ele;}
 		TNode(){}
@@ -39,7 +41,14 @@ public class MyTree<E> implements Tree<E> {
 	@Override
 	public Position<E> createRoot(E o) {
 		// TODO Auto-generated method stub
-		return null;
+		if(root != null)throw new RuntimeException("allready a root present");
+		TNode node = new TNode(o);
+		node.children = new MyLinkedList<TNode>();
+		node.parent = null;
+		size++;
+		root = node;
+		
+		return node;
 	}
 
 	@Override
@@ -74,8 +83,15 @@ public class MyTree<E> implements Tree<E> {
 
 	@Override
 	public Position<E> addChild(Position<E> parent, E o) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		
+		TNode child = new TNode(o);
+		child.children = new MyLinkedList<TNode>();
+		child.parent = (TNode)parent;
+		child.mySiblingPos =  ((TNode)parent).children.insertLast(child);
+		
+		
+		return child;
 	}
 
 	@Override
@@ -124,6 +140,54 @@ public class MyTree<E> implements Tree<E> {
 	public E replaceElement(Position<E> p, E o) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public void print()
+	{
+		print(this.root,"+");
+	}
+	private void print(TNode subTree,String intend)
+	{
+		System.out.println(intend+subTree.ele.toString());
+		Iterator<TNode> elements = subTree.children.elements();
+		
+		while(elements.hasNext())
+		{
+			
+			print(elements.next(),intend+"+");
+		}
+	}
+	public void getHeight()
+	{
+		System.out.println(getHeight(root));
+	}
+	public ArrayList<Position<E>> externalNodes()
+	{
+		ArrayList<Position<E>>nodes = new ArrayList<Position<E>>();
+		externalNodes(nodes,this.root);
+		
+		return nodes;
+	}
+	private void externalNodes(ArrayList<Position<E>> list,TNode subTree)
+	{
+		Iterator<TNode> pos = subTree.children.elements();
+		while(pos.hasNext())
+		{
+			externalNodes(list,pos.next());
+		}
+		if(subTree.children.size() == 0)
+			list.add(subTree);
+	}
+	private int getHeight(TNode subTree)
+	{
+		int h = -1;
+		Iterator<TNode> children = subTree.children.elements();
+		
+		while(children.hasNext())
+		{
+			h= Math.max(getHeight(children.next()),h);
+		}
+		
+		return h+1;
 	}
 
 }
