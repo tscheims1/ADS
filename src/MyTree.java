@@ -148,7 +148,10 @@ public class MyTree<E> implements Tree<E> {
 
 	@Override
 	public void remove(Position<E> p) {
-		// TODO Auto-generated method stub
+		TNode node = (TNode)p;
+		
+		node.parent.children.remove(node.mySiblingPos);
+		node.creator = null;
 		
 	}
 
