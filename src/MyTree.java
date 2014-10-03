@@ -94,8 +94,9 @@ public class MyTree<E> implements Tree<E> {
 
 	@Override
 	public int numberOfChildren(Position<E> parent) {
-		// TODO Auto-generated method stub
-		return 0;
+		TNode node = (TNode)parent;
+		return node.children.size();
+		
 	}
 
 	@Override
@@ -148,11 +149,20 @@ public class MyTree<E> implements Tree<E> {
 
 	@Override
 	public void remove(Position<E> p) {
+		
 		TNode node = (TNode)p;
+		if(node != root)
+		{
+			
 		
 		node.parent.children.remove(node.mySiblingPos);
+		}
+		else
+		{
+			root = null;
+		}
 		node.creator = null;
-		
+		size--;
 	}
 
 	@Override
@@ -176,8 +186,11 @@ public class MyTree<E> implements Tree<E> {
 
 	@Override
 	public E replaceElement(Position<E> p, E o) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		TNode node = (TNode)p;
+		node.ele = o;
+		
+		return node.ele;
 	}
 	public void print()
 	{
