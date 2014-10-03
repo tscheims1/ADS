@@ -12,7 +12,7 @@ import java.util.Iterator;
 public class MyTree<E> implements Tree<E> {
 	
 	private TNode root;
-	private int size;
+	private int size = 0;
 	private class TNode implements Position<E>
 	{
 		TNode parent;
@@ -66,7 +66,30 @@ public class MyTree<E> implements Tree<E> {
 	@Override
 	public Iterator<E> childrenElements(Position<E> parent) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		final TNode node = (TNode)parent;
+		return new Iterator<E>(){
+			Iterator<TNode>it =  node.children.elements();
+			@Override
+			public boolean hasNext() {
+				// TODO Auto-generated method stub
+				return it.hasNext();
+			}
+
+			@Override
+			public E next() {
+				// TODO Auto-generated method stub
+				return it.next().ele;
+			}
+
+			@Override
+			public void remove() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			
+		};
 	}
 
 	@Override
@@ -102,14 +125,25 @@ public class MyTree<E> implements Tree<E> {
 
 	@Override
 	public Position<E> addSiblingAfter(Position<E> sibling, E o) {
-		// TODO Auto-generated method stub
-		return null;
+		TNode sib = (TNode)sibling;
+		TNode insert = new TNode(o);
+		insert.parent = sib.parent;
+		
+		insert.mySiblingPos = sib.parent.children.insertAfter(sib.mySiblingPos, insert);
+		size++;
+		return insert;
 	}
 
 	@Override
 	public Position<E> addSiblingBefore(Position<E> sibling, E o) {
-		// TODO Auto-generated method stub
-		return null;
+		TNode sib = (TNode)sibling;
+		TNode insert = new TNode(o);
+		insert.parent = sib.parent;
+		
+		insert.mySiblingPos = sib.parent.children.insertBefore(sib.mySiblingPos, insert);
+		size++;
+		return insert;
+	
 	}
 
 	@Override
@@ -121,19 +155,20 @@ public class MyTree<E> implements Tree<E> {
 	@Override
 	public boolean isExternal(Position<E> p) {
 		// TODO Auto-generated method stub
-		return false;
+		TNode node = (TNode)p;
+		return node.children.size() == 0;
 	}
 
 	@Override
 	public boolean isInternal(Position<E> p) {
 		// TODO Auto-generated method stub
-		return false;
+		return !isExternal(p);
 	}
 
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
 	@Override
@@ -166,6 +201,37 @@ public class MyTree<E> implements Tree<E> {
 		externalNodes(nodes,this.root);
 		
 		return nodes;
+	}
+	class WalkHelper
+	{
+		TNode n;
+		int depth =-1;
+	}
+	public Position<E> getDeepestNode()
+	{
+		WalkHelper walker = new WalkHelper();
+		walker.n = root;
+		getDeepestNode(walker,root,1);
+		return walker.n;
+		
+	}
+	private void getDeepestNode(WalkHelper position,TNode subTree,int deepest)
+	{
+		
+		Iterator<TNode> pos = subTree.children.elements();
+		while(pos.hasNext())
+		{
+			getDeepestNode(position,pos.next(),deepest+1);
+		}
+		if(subTree.children.size() == 0)
+		{
+			if(deepest >= position.depth)
+			{
+				position.n = subTree;
+				position.depth = deepest;
+			}
+		}
+		
 	}
 	private void externalNodes(ArrayList<Position<E>> list,TNode subTree)
 	{

@@ -28,6 +28,8 @@ public class ADSSimulator2 {
 		{
 			System.out.println(item.element());
 		}
+		Position<String> deepest = stringTree.getDeepestNode();
+		System.out.println(deepest.element());
 		
 	}
 }
