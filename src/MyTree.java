@@ -121,7 +121,32 @@ public class MyTree<E> implements Tree<E> {
 	@Override
 	public Position<E> addChildAt(int pos, Position<E> parent, E o) {
 		// TODO Auto-generated method stub
-		return null;
+		TNode node = (TNode)parent;
+		TNode newNode = new TNode(o);
+		Position<TNode> mySiblingPos = null;
+		size++;
+		if(node.children.size()>pos)
+		{
+			mySiblingPos = node.children.insertLast(newNode);
+		}
+		else
+		{
+			Iterator<Position<TNode>> iterator = node.children.positions();
+			int current = 0;
+			while(iterator.hasNext())
+			{
+				current++;
+				Position<TNode> currentPos =  iterator.next();
+				if(current == pos)
+				{
+					mySiblingPos = node.children.insertAfter(currentPos, newNode);
+				}
+			}
+		}
+		
+		newNode.mySiblingPos = mySiblingPos;
+		newNode.parent = node;
+		return newNode;
 	}
 
 	@Override
