@@ -55,7 +55,10 @@ public class MyPriorityQueue <K extends Comparable<? super K>,E> implements Prio
 		PQLocator<K,E> locator = new PQLocator();
 		locator.key = key;
 		locator.elem = element;
+		
 		if(locs.length <= size)expand();
+		
+		
 		locs[size] = locator;
 		upHeap(size);//Tidy up the Heap
 		size++;
