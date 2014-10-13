@@ -34,19 +34,33 @@ public class MyPriorityQueue <K extends Comparable<? super K>,E> implements Prio
 	@Override
 	public Locator<K, E> showMin() {
 		// TODO Auto-generated method stub
-		return null;
+		return locs[1];
+		
 	}
 
 	@Override
 	public Locator<K, E> removeMin() {
 		// TODO Auto-generated method stub
-		return null;
+		swap(1,size-1);
+		size--;
+		upHeap(size);
+		downHeap(0,size);
+		
+		return locs[size+1];
 	}
 
 	@Override
 	public Locator<K, E> insert(K key, E element) {
 		// TODO Auto-generated method stub
-		return null;
+		PQLocator<K,E> locator = new PQLocator();
+		locator.key = key;
+		locator.elem = element;
+		if(locs.length <= size)expand();
+		locs[size] = locator;
+		upHeap(size);//Tidy up the Heap
+		size++;
+		
+		return locator;
 	}
 
 	@Override
@@ -64,26 +78,48 @@ public class MyPriorityQueue <K extends Comparable<? super K>,E> implements Prio
 	@Override
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
-		return false;
+		return size == 0;
 	}
 
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 	private void upHeap(int i)
 	{
-		int parent = 0;
-		while(i >0)
+		/*
+		 * Laufzeitkomplexität: Log2
+		 */
+		while(i >1 && locs[i].key.compareTo(locs[i/2].key) < 0)
 		{
-			parent = (i-1)/2;
-			if(locs[parent].key().compareTo(locs[i].key()) >0)
-				swap(parent,i);
-			i = parent;
-			
+			swap(i,i/2);
+			i/=2;
 		}
 	}
+	private void downHeap(int i, int length)
+	{
+		int leftChild = i*2;
+		int rightChild = i*2+1;
+		while(i< length)
+		{
+			int cand = leftChild;
+			if(rightChild < length && locs[rightChild].key.compareTo(locs[leftChild].key) < 0)
+			{
+				cand = rightChild;
+			}
+			if(locs[cand].key.compareTo(locs[i].key) <0)
+			{
+				swap(cand,i);
+				i = cand;
+				leftChild = i*2;
+				rightChild = i*2+1;
+			}
+			else
+				break;
+		}
+	}
+	
 	private void expand() {
 		locs = Arrays.copyOf(locs,locs.length*2);
 		}
@@ -94,6 +130,16 @@ public class MyPriorityQueue <K extends Comparable<? super K>,E> implements Prio
 		// do'nt forget the 'pos' values:
 		locs[i].pos=i;
 		locs[k].pos=k;		
+	}
+	public String ToString()
+	{
+		StringBuilder sb = new StringBuilder();
+		for(int i = 1; i < size;i++)
+		{
+			
+			sb.append(locs[i].key+"\n");
+		}
+		return sb.toString();
 	}
 
 }
