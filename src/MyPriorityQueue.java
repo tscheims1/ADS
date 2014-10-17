@@ -43,6 +43,8 @@ public class MyPriorityQueue <K extends Comparable<? super K>,E> implements Prio
 		// TODO Auto-generated method stub
 		swap(1,size-1);
 		size--;
+		
+		//Tidy up the Queue
 		upHeap(size);
 		downHeap(0,size);
 		
@@ -74,8 +76,13 @@ public class MyPriorityQueue <K extends Comparable<? super K>,E> implements Prio
 
 	@Override
 	public void replaceKey(Locator<K, E> loc, K newKey) {
-		// TODO Auto-generated method stub
 		
+		for(int i =0; i < size;i++){
+			if(locs[i] == loc)
+				locs[i].key = newKey;
+		}
+		upHeap(size);
+		downHeap(0,size);
 	}
 
 	@Override

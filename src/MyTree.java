@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 /**
  * 
@@ -84,6 +85,12 @@ public class MyTree<E> implements Tree<E> {
 
 			@Override
 			public void remove() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void forEachRemaining(Consumer<? super E> arg0) {
 				// TODO Auto-generated method stub
 				
 			}
