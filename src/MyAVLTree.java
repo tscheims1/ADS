@@ -168,7 +168,7 @@ public class MyAVLTree<K extends Comparable<? super K>, E> implements
 		}
 		else
 		{
-			if(key.compareTo(n.key) > 0)
+			if(key.compareTo(n.key) >0)
 			{
 				n.right = node;
 			}
@@ -176,9 +176,10 @@ public class MyAVLTree<K extends Comparable<? super K>, E> implements
 			{
 				n.left = node;
 			}
+			node.expand(key, o);
 		}
 		
-		node.expand(key, o);
+	
 		
 		
 		return node;
@@ -269,13 +270,14 @@ public class MyAVLTree<K extends Comparable<? super K>, E> implements
 	{
 		if(subtree.isExternal())
 		{
+			
 			return;
 		}
 		prettyPrint(subtree.right,deep+1);
-		//System.out.println(new String(new char[deep]).replace('\0', ' ')+"+");
-		//prettyPrint(subtree.left,deep+1);
 		
-		System.out.println(new String(new char[deep]).replace('\0', ' ')+ "+"+subtree.elem+ "     deep"+subtree.height);
+		System.out.println(new String(new char[deep]).replace('\0', ' ')+ "+-("+subtree.height+")"+subtree.key);
+		//System.out.println(new String(new char[deep]).replace('\0', ' ')+"|");
+		prettyPrint(subtree.left,deep+1);
 	}
 	private void print(AVLNode n,String before)
 	{
@@ -288,6 +290,7 @@ public class MyAVLTree<K extends Comparable<? super K>, E> implements
 		
 		
 		print(n.left,before+"+");
+	
 		print(n.right,before+"++");
 		
 	}
