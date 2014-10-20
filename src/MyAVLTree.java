@@ -176,8 +176,8 @@ public class MyAVLTree<K extends Comparable<? super K>, E> implements
 			{
 				n.left = node;
 			}
-			node.expand(key, o);
-		}
+			
+		}node.expand(key, o);
 		
 	
 		
@@ -195,7 +195,13 @@ public class MyAVLTree<K extends Comparable<? super K>, E> implements
 	@Override
 	public void remove(Locator<K, E> loc) {
 		// TODO Auto-generated method stub
+		AVLNode node = checkAndCast(loc);
 		
+		while(!node.isExternal())
+		{
+			
+			
+		}
 	}
 
 
@@ -245,7 +251,12 @@ public class MyAVLTree<K extends Comparable<? super K>, E> implements
 	@Override
 	public Locator<K, E> min() {
 		// TODO Auto-generated method stub
-		return null;
+		AVLNode node = root;
+		while(!node.isExternal())
+		{
+			node = node.left;
+		}
+		return node.parent;
 	}
 
 
@@ -254,8 +265,14 @@ public class MyAVLTree<K extends Comparable<? super K>, E> implements
 	 */
 	@Override
 	public Locator<K, E> max() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		AVLNode node = root;
+		while(!node.isExternal())
+		{
+			node = node.right;
+			
+		}
+		return node.parent;
 	}
 	public void print()
 	{
@@ -315,8 +332,10 @@ public class MyAVLTree<K extends Comparable<? super K>, E> implements
 		
 		}
 		t.prettyPrint();
+		System.out.println("min"+t.min().key());
+		System.out.println("max"+t.max().key());
 		for (int i=0;i<n/2;i++) {
-			//t.remove(t.find(locs[i].key()));
+			t.find(locs[i].key());
 		}
 	}
 
