@@ -1,6 +1,5 @@
 import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.function.Consumer;
+
 
 
 public class MyLinkedList <E> implements List<E>, Iterable<E>{
@@ -40,11 +39,7 @@ public class MyLinkedList <E> implements List<E>, Iterable<E>{
 			
 		}
 
-		@Override
-		public void forEachRemaining(Consumer<? super E> arg0) {
-			// TODO Auto-generated method stub
-			
-		}
+
 		
 	}
 	class PosIterator implements Iterator<Position<E>>
@@ -75,11 +70,7 @@ public class MyLinkedList <E> implements List<E>, Iterable<E>{
 			
 		}
 
-		@Override
-		public void forEachRemaining(Consumer<? super Position<E>> arg0) {
-			// TODO Auto-generated method stub
-			
-		}
+
 		
 	}
 	
@@ -309,17 +300,7 @@ public class MyLinkedList <E> implements List<E>, Iterable<E>{
 		return null;
 	}
 
-	@Override
-	public void forEach(Consumer<? super E> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public Spliterator<E> spliterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 	
